@@ -1,13 +1,12 @@
 import { FC, useState } from "react";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Product } from "../../models/Product";
 import { fetcherDelete } from "../api/fetchers";
 import { useProducts } from "../hooks/useProducts";
-import { CircularProgress, useMediaQuery, useTheme } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import ModalApp from "../ui/ModalApp";
 
 type ModalDeleteProductProps = {
   open: boolean;
@@ -15,33 +14,9 @@ type ModalDeleteProductProps = {
   handleClose: () => void;
 };
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1.5px solid #15151E",
-  borderRadius: 1,
-  boxShadow: 16,
-  p: 3,
-};
-
 const ModalDeleteProduct: FC<ModalDeleteProductProps> = ({ open, product, handleClose }) => {
   const { data, mutate } = useProducts();
   const [isLoading, setIsLoading] = useState(false);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  if (isMobile) {
-    style.width = 340;
-    style.p = 1.5;
-  } else {
-    style.width = 500;
-    style.p = 3;
-  }
 
   const handleDeleteProduct = () => {
     setIsLoading(true);
@@ -56,8 +31,8 @@ const ModalDeleteProduct: FC<ModalDeleteProductProps> = ({ open, product, handle
   };
 
   return (
-    <Modal open={open} onClose={handleClose} aria-labelledby="modal-delete-title">
-      <Box sx={style}>
+    <ModalApp open={open} onClose={handleClose} aria-labelledby="modal-delete-title">
+      <>
         <Typography id="modal-delete-title" variant="h6" component="h2" mb={3} textAlign={"center"}>
           {"Do you want to remove the product "}
           <Typography id="modal-delete-title" variant="h6" component="span" color={"primary.main"}>
@@ -73,8 +48,8 @@ const ModalDeleteProduct: FC<ModalDeleteProductProps> = ({ open, product, handle
             {isLoading ? <CircularProgress size={24} color="inherit" /> : "Delete"}
           </Button>
         </Stack>
-      </Box>
-    </Modal>
+      </>
+    </ModalApp>
   );
 };
 

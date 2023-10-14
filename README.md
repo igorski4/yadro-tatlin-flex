@@ -12,7 +12,7 @@ To Start Development Server (on localhost:3000):
 
 To Start Server (on localhost:7000):
 
-`ts-hode server.ts`
+`ts-node server.ts`
 
 To Visit App:
 
