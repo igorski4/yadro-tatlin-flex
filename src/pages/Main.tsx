@@ -12,7 +12,7 @@ import ModalEditProduct from "../components/ModalEditProduct";
 import SplashScreen from "../ui/SplashScreen";
 import Layout from "../layout/Layout";
 import Error from "../ui/Error";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const Main: FC = () => {
   const { data, error, isLoading } = useProducts();
@@ -56,38 +56,46 @@ const Main: FC = () => {
 
       <Layout>
         <Stack rowGap={isMobile ? 1 : 2} direction={"column"} width={"100%"}>
-          <Stack columnGap={4} rowGap={2} direction={isMobile ? "column" : "row"}>
-            <TextField
-              id="search"
-              label="Search"
-              variant="filled"
-              sx={{ flexGrow: 1 }}
-              value={search}
-              size={isMobile ? "small" : "medium"}
-              onChange={handlerSearch}
-            />
-            <FormControl
-              sx={{
-                flexBasis: isMobile ? "100%" : "500px",
-              }}
-            >
-              <InputLabel id="sorting-label">Sorting</InputLabel>
-              <Select
-                labelId="sorting"
-                id="sorting"
-                value={sorting}
-                label="Sorting"
-                variant="filled"
-                size={isMobile ? "small" : "medium"}
-                onChange={handleChangeSorting}
-              >
-                <MenuItem value={"id"}>Id</MenuItem>
-                <MenuItem value={"name"}>Name</MenuItem>
-                <MenuItem value={"date"}>Date</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-          <ProductsTable data={sortingData} />
+          {data?.length ? (
+            <>
+              <Stack columnGap={4} rowGap={2} direction={isMobile ? "column" : "row"}>
+                <TextField
+                  id="search"
+                  label="Search"
+                  variant="filled"
+                  sx={{ flexGrow: 1 }}
+                  value={search}
+                  size={isMobile ? "small" : "medium"}
+                  onChange={handlerSearch}
+                />
+                <FormControl
+                  sx={{
+                    flexBasis: isMobile ? "100%" : "500px",
+                  }}
+                >
+                  <InputLabel id="sorting-label">Sorting</InputLabel>
+                  <Select
+                    labelId="sorting"
+                    id="sorting"
+                    value={sorting}
+                    label="Sorting"
+                    variant="filled"
+                    size={isMobile ? "small" : "medium"}
+                    onChange={handleChangeSorting}
+                  >
+                    <MenuItem value={"id"}>Id</MenuItem>
+                    <MenuItem value={"name"}>Name</MenuItem>
+                    <MenuItem value={"date"}>Date</MenuItem>
+                  </Select>
+                </FormControl>
+              </Stack>
+              <ProductsTable data={sortingData} />
+            </>
+          ) : (
+            <Typography variant={"h3"} textAlign={"center"} my={5}>
+              The table is empty!
+            </Typography>
+          )}
           <Button onClick={handleOpenChangeModal} variant={"contained"} size={"large"} sx={{ alignSelf: "flex-end" }}>
             Create product
           </Button>

@@ -180,10 +180,10 @@ const ProductsTable: FC<ProductsTableProps> = ({ data }) => {
                         const entriesEl = Object.entries(el).filter((el) => el[0] !== "id");
 
                         return (
-                          <TableCell align={"left"} sx={{ py: 3, px: 0.5 }}>
+                          <TableCell key={column.id} align={"left"} sx={{ py: 3, px: 0.5 }}>
                             <List sx={{ p: 0 }}>
                               {entriesEl.map((el) => (
-                                <ListItem sx={{ wordWrap: "break-word", px: 0, py: 0.5 }}>
+                                <ListItem key={el[0]} sx={{ wordWrap: "break-word", px: 0, py: 0.5 }}>
                                   <Typography sx={{ fontWeight: "bold" }}>
                                     {el[0][0].toUpperCase() + el[0].slice(1)}
                                     {":"}&nbsp;

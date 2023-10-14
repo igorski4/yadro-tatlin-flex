@@ -3,7 +3,7 @@
     "name": "Product 1",
     "weight": "200 gr",
     "order_date": "2023-10-28T00:00:00.000+03:00",
-    "availability": false,
+    "availability": true,
     "customer": "2 Customer new",
     "id": 1
   },
@@ -11,8 +11,8 @@
     "name": "2 Product",
     "weight": "300 gr",
     "order_date": "2023-12-20T00:00:00.000+03:00",
-    "availability": true,
-    "customer": "2 Customer new",
+    "availability": false,
+    "customer": "Cust 4",
     "id": 2
   },
   {
@@ -27,7 +27,7 @@
     "name": "Prod 4",
     "weight": "1g",
     "order_date": "2023-11-26T00:00:00.000+03:00",
-    "availability": true,
+    "availability": false,
     "customer": "Cust 4",
     "id": 4
   }
