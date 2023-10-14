@@ -70,7 +70,7 @@ const Main: FC = () => {
                 />
                 <FormControl
                   sx={{
-                    flexBasis: isMobile ? "100%" : "500px",
+                    flexBasis: isMobile ? "100%" : "400px",
                   }}
                 >
                   <InputLabel id="sorting-label">Sorting</InputLabel>
