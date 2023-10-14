@@ -1,6 +1,6 @@
 import { FC } from "react";
 import FormControl from "@mui/material/FormControl";
-import { Controller, Control, FieldName, FieldValues, FieldError } from "react-hook-form";
+import { Controller, Control, FieldName, FieldValues } from "react-hook-form";
 import { TypeFormInput } from "../ModalEditProduct";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";

@@ -1,9 +1,8 @@
 import { FC } from "react";
 import FormControl from "@mui/material/FormControl";
-import { Controller, Control, FieldName, FieldValues, FieldError } from "react-hook-form";
+import { Controller, Control, FieldName, FieldValues } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { TypeFormInput } from "../ModalEditProduct";
-import ErrorText from "./ErrorText";
 import { Product } from "../../../models/Product";
 
 export type FormTextFieldProps<TFieldValues extends FieldValues = TypeFormInput> = {
