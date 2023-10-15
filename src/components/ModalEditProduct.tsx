@@ -28,37 +28,24 @@ const ModalEditProduct: FC<ModalEditProductProps> = ({ open, product, handleClos
   const onSubmit = handleSubmit(async (formData) => {
     setIsLoading(true);
 
-    if (product) {
-      const putProducts = await fetcherPatch({
-        url: "/products",
-        data: {
-          ...product,
-          availability: formData.availability,
-          customer: formData.customer,
-        },
-      });
+    const fetchProduct = product
+      ? await fetcherPatch({
+          url: "/products",
+          data: {
+            ...product,
+            availability: formData.availability,
+            customer: formData.customer,
+          },
+        })
+      : await fetcherPost({
+          url: "/products",
+          data: { ...formData },
+        });
 
-      if (data) {
-        mutate([...data, putProducts]);
-      } else {
-        mutate([putProducts]);
-      }
-    } else {
-      const newProducts = await fetcherPost({
-        url: "/products",
-        data: {
-          ...formData,
-        },
-      });
+    const newData = data ? [...data, fetchProduct] : [fetchProduct];
+    mutate([...newData]);
 
-      if (data) {
-        mutate([...data, newProducts]);
-      } else {
-        mutate([newProducts]);
-      }
-    }
     setIsLoading(false);
-
     setTimeout(reset);
     handleClose();
   });
