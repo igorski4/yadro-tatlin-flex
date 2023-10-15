@@ -22,7 +22,7 @@ const FormCheckbox: FC<FormCheckboxProps> = ({ control, name, label, product, ..
           <Controller
             name={name}
             control={control}
-            defaultValue={Boolean(product?.[name])}
+            defaultValue={Boolean(product?.[name]) || false}
             render={({ field }) => <Checkbox defaultChecked={Boolean(product?.[name])} {...field} {...rest} />}
           />
         }

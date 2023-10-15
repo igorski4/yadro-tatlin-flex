@@ -30,7 +30,7 @@ const FormTextField: FC<FormTextFieldProps> = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={product?.[name]}
+        defaultValue={product?.[name] || ""}
         rules={rules}
         render={({ field, fieldState }) => (
           <TextField

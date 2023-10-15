@@ -34,7 +34,7 @@ const FormDatePicker: FC<FormDatePickerProps> = ({ control, name, label, product
                 {...field}
                 label="Order date"
                 views={["year", "month", "day"]}
-                value={product ? DateTime.fromISO(product[name].toString()) : field.value}
+                value={product ? DateTime.fromISO(product[name].toString()) : field.value || null}
                 {...rest}
                 slotProps={{
                   textField: {
