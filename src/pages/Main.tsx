@@ -89,7 +89,13 @@ const Main: FC = () => {
                   </Select>
                 </FormControl>
               </Stack>
-              <ProductsTable data={sortingData} />
+              {sortingData?.length ? (
+                <ProductsTable data={sortingData} />
+              ) : (
+                <Typography variant={"h4"} textAlign={"center"} my={5}>
+                  Products not found!
+                </Typography>
+              )}
             </>
           ) : (
             <Typography variant={"h3"} textAlign={"center"} my={5}>

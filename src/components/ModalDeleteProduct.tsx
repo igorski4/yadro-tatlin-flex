@@ -7,6 +7,7 @@ import { fetcherDelete } from "../api/fetchers";
 import { useProducts } from "../hooks/useProducts";
 import { CircularProgress } from "@mui/material";
 import ModalApp from "../ui/ModalApp";
+import { updateData } from "../utils/swr";
 
 type ModalDeleteProductProps = {
   open: boolean;
@@ -18,16 +19,16 @@ const ModalDeleteProduct: FC<ModalDeleteProductProps> = ({ open, product, handle
   const { data, mutate } = useProducts();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = async () => {
     setIsLoading(true);
 
-    if (product && data) {
-      fetcherDelete({ url: "/products", id: product.id });
-      const afterDeleteData = data.filter((e) => e.id !== product.id);
-      mutate([...afterDeleteData], { revalidate: false });
-      handleClose();
+    if (product) {
+      const deleteProductId = await fetcherDelete({ url: "/products", id: product?.id });
+      updateData({ data, deleteProductId, mutate });
     }
+
     setIsLoading(false);
+    handleClose();
   };
 
   return (

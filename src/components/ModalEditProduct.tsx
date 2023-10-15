@@ -10,6 +10,7 @@ import { fetcherPatch, fetcherPost } from "../api/fetchers";
 import { useProducts } from "../hooks/useProducts";
 import { CircularProgress } from "@mui/material";
 import ModalApp from "../ui/ModalApp";
+import { updateData } from "../utils/swr";
 
 type ModalEditProductProps = {
   open: boolean;
@@ -28,22 +29,25 @@ const ModalEditProduct: FC<ModalEditProductProps> = ({ open, product, handleClos
   const onSubmit = handleSubmit(async (formData) => {
     setIsLoading(true);
 
-    const fetchProduct = product
-      ? await fetcherPatch({
-          url: "/products",
-          data: {
-            ...product,
-            availability: formData.availability,
-            customer: formData.customer,
-          },
-        })
-      : await fetcherPost({
-          url: "/products",
-          data: { ...formData },
-        });
+    if (product) {
+      const patchProduct = await fetcherPatch({
+        url: "/products",
+        data: {
+          ...product,
+          availability: formData.availability,
+          customer: formData.customer,
+        },
+      });
 
-    const newData = data ? [...data, fetchProduct] : [fetchProduct];
-    mutate([...newData]);
+      updateData({ data, patchProduct, mutate });
+    } else {
+      const postProduct = await fetcherPost({
+        url: "/products",
+        data: { ...formData },
+      });
+
+      updateData({ data, postProduct, mutate });
+    }
 
     setIsLoading(false);
     setTimeout(reset);
