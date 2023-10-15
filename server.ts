@@ -2,8 +2,9 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import fs from "fs";
 import cors from "cors";
+import { Product } from "./models/Product";
 
-interface DataItem {
+interface DataItem extends Product {
   id: number;
 }
 
@@ -15,23 +16,23 @@ const filePath = "db.json";
 app.use(bodyParser.json());
 app.use(cors());
 
-const loadData = <T extends DataItem>(): T[] => {
+const loadData = (): DataItem[] => {
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 };
 
-const saveData = <T extends DataItem>(data: T[]): void => {
+const saveData = (data: DataItem[]): void => {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
 };
 
 app.get("/products", (req: Request, res: Response) => {
-  const data = loadData<any>();
+  const data = loadData();
   res.json(data);
 });
 
 app.post("/products", (req: Request, res: Response) => {
-  const data = loadData<DataItem>();
-  const newItem: DataItem = req.body;
+  const data = loadData();
+  const newItem = req.body;
 
   const arrayId = data.map((item) => item.id);
   const newId = arrayId.length > 0 ? Math.max(...arrayId) + 1 : 1;
@@ -43,11 +44,11 @@ app.post("/products", (req: Request, res: Response) => {
 });
 
 app.patch("/products/:id", (req: Request, res: Response) => {
-  const data = loadData<DataItem>();
-  const updatedItem: DataItem = req.body;
+  const data = loadData();
+  const updatedItem = req.body;
 
   const itemId = +req.params.id;
-  const index = data.findIndex((item: DataItem) => item.id === itemId);
+  const index = data.findIndex((item) => item.id === itemId);
   data[index] = updatedItem;
 
   saveData(data);
@@ -55,10 +56,10 @@ app.patch("/products/:id", (req: Request, res: Response) => {
 });
 
 app.delete("/products/:id", (req: Request, res: Response) => {
-  const data = loadData<DataItem>();
+  const data = loadData();
 
   const itemId = +req.params.id;
-  const index = data.findIndex((item: DataItem) => item.id === itemId);
+  const index = data.findIndex((item) => item.id === itemId);
   const deletedItem = data.splice(index, 1);
 
   saveData(data);
